@@ -1,0 +1,11 @@
+.split{
+	width: 45%;
+	height: 300px;
+	position: relative;
+	display: inline-table;
+}
+
+#agregar_form,#limpiar_form{
+	position: relative;
+	display: inline-block;
+}

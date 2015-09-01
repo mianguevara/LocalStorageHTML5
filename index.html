@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Local Storage</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<link rel="stylesheet" href="style.css">	
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	</head>
+	<body>
+
+		<div class="container">
+			<div class="split">
+				<h1>Cosas por hacer</h1>
+				<form id="agregar_form">
+					<label>Actividad:</label>
+					<input type="text" placeholder="Ingrese la actividad" id="entrada">
+					<input type="submit" value="Registrar">
+				</form>
+				<form id="limpiar_form">
+					<input type="submit" value="Limpiar">
+				</form>
+			</div>
+			<div class="split">
+				<h1>Cosas por hacer</h1>
+				<ol id="todo_list">
+				</ol>
+			</div>
+		</div>
+		<script src="storage.js"></script>
+		<script>
+		 
+		 window.addEventListener("load",init);
+		 var storage;
+		 var clave = "tutorial_storage";
+
+		 function init(){
+
+		 	var agregar = document.querySelector("#agregar_form");
+		 	var limpiar = document.querySelector("#limpiar_form");
+		 	storage = new Lista(clave);
+		 	agregar.addEventListener("submit",agregarActividad,false);
+		 	limpiar.addEventListener("submit",limpiarActividades,false);
+		 	actualizarLista(storage.obtenerActividades());
+		 }
+
+		 function agregarActividad(e){
+		 	
+		 	e.preventDefault();
+
+			var actividad = document.querySelector("#entrada").value;
+
+		 	if (storage.agregarActividad(actividad)) {
+		 		console.log("Se agrego la actividad");
+		 		actualizarLista(storage.obtenerActividades());
+		 	}
+		 
+		 }
+
+		 function actualizarLista(actividades){
+
+		 	var lista = document.querySelector("#todo_list");
+		 	lista.innerHTML = "";
+		 	if(actividades != null){
+		 		for(i in actividades){
+		 			var actividad = actividades[i];
+		 			var elemento = document.createElement("li");
+		 			elemento.innerHTML = actividad;
+		 			lista.appendChild(elemento);
+		 		}
+		 	}
+		 }
+
+		 function limpiarActividades(e){
+		 	
+		 	localStorage.clear();
+		 	
+		 }
+
+		</script>
+	</body>
+</html>
